@@ -75,10 +75,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "CampusEase.lk — AI Powered Campus Assistant" },
       { name: "description", content: "AI-powered campus companion for lecturers and students." },
-      { property: "og:title", content: "CampusEase.lk" },
-      { property: "og:description", content: "AI-powered campus companion." },
+      { property: "og:title", content: "CampusEase.lk — AI Powered Campus Assistant" },
+      { property: "og:description", content: "AI-powered campus companion for lecturers and students." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "CampusEase.lk — AI Powered Campus Assistant" },
+      { name: "twitter:description", content: "AI-powered campus companion for lecturers and students." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/ca901249-e200-416a-944a-840ed57edffd" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/ca901249-e200-416a-944a-840ed57edffd" },
     ],
     links: [
       {
