@@ -1,0 +1,90 @@
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { useAuth } from "@/lib/use-auth";
+import {
+  Calendar, BookOpen, FileText, Users, Video, ClipboardList, Bell, FileSignature,
+  LogOut, MessageCircle, Upload, GraduationCap,
+} from "lucide-react";
+
+export const Route = createFileRoute("/dashboard")({
+  component: Dashboard,
+});
+
+const TILES = [
+  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1 },
+  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2 },
+  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3 },
+  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1 },
+  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2 },
+  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3 },
+  { icon: FileSignature, title: "University Forms", desc: "Apply & submit forms", tone: 1 },
+  { icon: Bell, title: "Events & Notices", desc: "Stay updated", tone: 2 },
+];
+
+const TONE_BG: Record<number, string> = {
+  1: "linear-gradient(135deg, oklch(0.6 0.22 270), oklch(0.65 0.2 285))",
+  2: "linear-gradient(135deg, oklch(0.6 0.22 255), oklch(0.7 0.18 230))",
+  3: "linear-gradient(135deg, oklch(0.55 0.22 280), oklch(0.6 0.22 250))",
+};
+
+function Dashboard() {
+  const { user, role, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && !user) navigate({ to: "/" });
+  }, [loading, user, navigate]);
+
+  const isLecturer = role === "lecturer";
+
+  return (
+    <div className="relative min-h-screen overflow-hidden">
+      <div className="pointer-events-none absolute -top-40 left-1/3 h-96 w-96 rounded-full opacity-30 blur-3xl" style={{ background: "var(--grad-hero)" }} />
+
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+        <Link to="/" className="flex items-center gap-2">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl btn-hero">
+            <GraduationCap className="h-4 w-4" />
+          </div>
+          <span className="text-lg font-semibold tracking-tight">CampusEase<span className="text-primary">.lk</span></span>
+        </Link>
+        <div className="flex items-center gap-2">
+          {isLecturer ? (
+            <Link to="/lecturer/upload" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
+              <Upload className="h-4 w-4" /> Upload
+            </Link>
+          ) : (
+            <Link to="/student/connect" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
+              <MessageCircle className="h-4 w-4" /> AI Connect
+            </Link>
+          )}
+          <button onClick={() => signOut().then(() => navigate({ to: "/" }))} className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80">
+            <LogOut className="h-4 w-4" />
+          </button>
+        </div>
+      </header>
+
+      <main className="relative z-10 mx-auto max-w-6xl px-6 pb-20">
+        <div className="mb-8">
+          <p className="text-sm text-muted-foreground">{isLecturer ? "Lecturer" : "Student"} Dashboard</p>
+          <h1 className="text-3xl font-bold sm:text-4xl">Welcome back 👋</h1>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {TILES.map((t) => (
+            <button
+              key={t.title}
+              className="glass-strong group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-1"
+            >
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md" style={{ background: TONE_BG[t.tone] }}>
+                <t.icon className="h-5 w-5" />
+              </div>
+              <h3 className="text-sm font-semibold">{t.title}</h3>
+              <p className="mt-1 text-xs text-muted-foreground">{t.desc}</p>
+            </button>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}
