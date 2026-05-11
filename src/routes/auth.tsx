@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
@@ -26,6 +26,22 @@ function AuthPage() {
 
   const isLecturer = role === "lecturer";
   const Icon = isLecturer ? Users : GraduationCap;
+  const destination = isLecturer ? "/lecturer/upload" : "/student/ai-connect";
+
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (active && session) navigate({ to: destination });
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (session) navigate({ to: destination });
+    });
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [destination]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -112,7 +128,7 @@ function AuthPage() {
           <button
             type="button"
             onClick={async () => {
-              const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+              const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}${destination}` });
               if (result.error) toast.error("Google sign-in failed");
             }}
             className="flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-white px-6 py-3 text-sm font-medium text-foreground shadow-sm transition hover:bg-secondary"

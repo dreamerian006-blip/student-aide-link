@@ -1,5 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { GraduationCap, Users, Sparkles, MessageCircle, Calendar, FileText } from "lucide-react";
+import { useEffect } from "react";
+import { useAuth } from "@/lib/use-auth";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -14,6 +16,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const navigate = useNavigate();
+  const { session, role, loading } = useAuth();
+
+  useEffect(() => {
+    if (loading || !session) return;
+    navigate({ to: role === "lecturer" ? "/lecturer/upload" : "/student/ai-connect" });
+  }, [session, role, loading, navigate]);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* decorative blobs */}
