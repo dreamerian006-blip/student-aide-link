@@ -26,6 +26,22 @@ function AuthPage() {
 
   const isLecturer = role === "lecturer";
   const Icon = isLecturer ? Users : GraduationCap;
+  const destination = isLecturer ? "/lecturer/upload" : "/student/ai-connect";
+
+  useEffect(() => {
+    let active = true;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (active && session) navigate({ to: destination });
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
+      if (session) navigate({ to: destination });
+    });
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [destination]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
