@@ -71,7 +71,11 @@ function AuthPage() {
             </div>
             <div>
               <h1 className="text-xl font-bold">{isLecturer ? "Lecturer" : "Student"} Portal</h1>
-              <p className="text-xs text-muted-foreground">{mode === "login" ? "Welcome back" : "Create your account"}</p>
+              <p className="text-xs text-muted-foreground">
+                {mode === "login"
+                  ? isLecturer ? "Welcome back" : "Welcome back, future grad 👑"
+                  : "Create your account"}
+              </p>
             </div>
           </div>
 
