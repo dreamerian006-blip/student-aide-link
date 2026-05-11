@@ -67,7 +67,17 @@ function Dashboard() {
       <main className="relative z-10 mx-auto max-w-6xl px-6 pb-20">
         <div className="mb-8">
           <p className="text-sm text-muted-foreground">{isLecturer ? "Lecturer" : "Student"} Dashboard</p>
-          <h1 className="text-3xl font-bold sm:text-4xl">Welcome back 👋</h1>
+          {(() => {
+            const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || (user?.email ? user.email.split("@")[0] : null);
+            return (
+              <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#1a1a1a" }}>
+                {displayName ? `Welcome, ${displayName}` : "Welcome to CampusEase"}
+              </h1>
+            );
+          })()}
+          <p style={{ fontSize: "14px", color: "#666", marginTop: "4px" }}>
+            Access your academic resources below
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
