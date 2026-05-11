@@ -32,6 +32,54 @@ export type Database = {
         }
         Relationships: []
       }
+      timetables: {
+        Row: {
+          academic_year: string
+          created_at: string
+          department: string
+          faculty: string
+          full_name: string
+          id: string
+          semester: string
+          status: string
+          student_id: string
+          subjects: Json
+          university: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          academic_year: string
+          created_at?: string
+          department: string
+          faculty: string
+          full_name: string
+          id?: string
+          semester: string
+          status?: string
+          student_id: string
+          subjects?: Json
+          university: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          academic_year?: string
+          created_at?: string
+          department?: string
+          faculty?: string
+          full_name?: string
+          id?: string
+          semester?: string
+          status?: string
+          student_id?: string
+          subjects?: Json
+          university?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

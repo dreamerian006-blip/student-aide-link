@@ -10,8 +10,8 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-const TILES = [
-  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1 },
+const TILES: { icon: any; title: string; desc: string; tone: number; to?: string }[] = [
+  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
   { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2 },
   { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3 },
   { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1 },
@@ -84,6 +84,7 @@ function Dashboard() {
           {TILES.map((t) => (
             <button
               key={t.title}
+              onClick={() => t.to && navigate({ to: t.to })}
               className="glass-strong group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-1"
             >
               <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md" style={{ background: TONE_BG[t.tone] }}>
