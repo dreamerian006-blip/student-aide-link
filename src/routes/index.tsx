@@ -16,6 +16,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Landing() {
+  const navigate = useNavigate();
+  const { session, role, loading } = useAuth();
+
+  useEffect(() => {
+    if (loading || !session) return;
+    navigate({ to: role === "lecturer" ? "/lecturer/upload" : "/student/ai-connect" });
+  }, [session, role, loading, navigate]);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* decorative blobs */}
