@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, LogOut, Sparkles, Send, X } from "lucide-react";
+import { MessageCircle, LogOut, Sparkles, Send, X, ArrowRight } from "lucide-react";
 import qrImage from "@/assets/campusease-qr.png";
+import { useAuth } from "@/lib/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/student/connect")({
   component: StudentConnect,
@@ -13,7 +15,7 @@ type Msg = { from: "me" | "bot"; text: string };
 
 function StudentConnect() {
   const navigate = useNavigate();
-  const [name, setName] = useState("Queen");
+  const { user } = useAuth();
   const [chatOpen, setChatOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Msg[]>([
@@ -21,24 +23,17 @@ function StudentConnect() {
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("ce_student_name");
-      const id = localStorage.getItem("ce_student_id");
-      if (!id) {
-        navigate({ to: "/student/login" });
-        return;
-      }
-      if (stored) setName(stored);
-    } catch {}
-  }, [navigate]);
+  const displayName: string =
+    (user?.user_metadata?.full_name as string | undefined)?.split(" ")[0] ||
+    (user?.email ? user.email.split("@")[0] : "");
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, chatOpen]);
 
-  function handleLogout() {
+  async function handleLogout() {
     try {
+      await supabase.auth.signOut();
       localStorage.removeItem("ce_student_name");
       localStorage.removeItem("ce_student_id");
     } catch {}
@@ -74,13 +69,20 @@ function StudentConnect() {
         <Link to="/" className="text-base font-semibold tracking-tight">
           CampusEase<span className="text-primary">.lk</span>
         </Link>
-        <button
-          onClick={handleLogout}
-          className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80"
-          aria-label="Logout"
-        >
-          <LogOut className="h-4 w-4" />
-        </button>
+        <div className="flex items-center gap-3">
+          {displayName && (
+            <span className="hidden sm:inline text-sm font-medium text-foreground">
+              {displayName}
+            </span>
+          )}
+          <button
+            onClick={() => { void handleLogout(); }}
+            className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80"
+            aria-label="Logout"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+        </div>
       </header>
 
       <main className="relative z-10 mx-auto max-w-2xl px-5 pb-24">
@@ -89,7 +91,8 @@ function StudentConnect() {
             <Sparkles className="h-3 w-3 text-primary" /> AI Connect
           </div>
           <h1 className="text-2xl font-bold sm:text-3xl">
-            Hi {name}, Connect with <span className="gradient-text">AI</span> 👑
+            {displayName ? `Hi ${displayName}, ` : "Welcome, "}
+            Connect with <span className="gradient-text">CampusEase AI</span>
           </h1>
         </div>
 
@@ -111,6 +114,14 @@ function StudentConnect() {
                   className="block"
                 />
               </div>
+
+              {/* Continue to Dashboard */}
+              <button
+                onClick={() => navigate({ to: "/dashboard" })}
+                className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md transition hover:opacity-90 sm:w-auto sm:px-8"
+              >
+                Continue to Dashboard <ArrowRight className="h-4 w-4" />
+              </button>
 
               {/* Steps */}
               <div className="mt-6 w-full">
