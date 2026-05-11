@@ -69,13 +69,20 @@ function StudentConnect() {
         <Link to="/" className="text-base font-semibold tracking-tight">
           CampusEase<span className="text-primary">.lk</span>
         </Link>
-        <button
-          onClick={handleLogout}
-          className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80"
-          aria-label="Logout"
-        >
-          <LogOut className="h-4 w-4" />
-        </button>
+        <div className="flex items-center gap-3">
+          {displayName && (
+            <span className="hidden sm:inline text-sm font-medium text-foreground">
+              {displayName}
+            </span>
+          )}
+          <button
+            onClick={() => { void handleLogout(); }}
+            className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80"
+            aria-label="Logout"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+        </div>
       </header>
 
       <main className="relative z-10 mx-auto max-w-2xl px-5 pb-24">
@@ -84,7 +91,8 @@ function StudentConnect() {
             <Sparkles className="h-3 w-3 text-primary" /> AI Connect
           </div>
           <h1 className="text-2xl font-bold sm:text-3xl">
-            Hi {name}, Connect with <span className="gradient-text">AI</span> 👑
+            {displayName ? `Hi ${displayName}, ` : "Welcome, "}
+            Connect with <span className="gradient-text">CampusEase AI</span>
           </h1>
         </div>
 
