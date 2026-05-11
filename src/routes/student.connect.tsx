@@ -1,101 +1,224 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
-import { useAuth } from "@/lib/use-auth";
-import { MessageCircle, QrCode, LogOut, LayoutDashboard, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { MessageCircle, LogOut, Sparkles, Send, X } from "lucide-react";
+import qrImage from "@/assets/campusease-qr.png";
 
 export const Route = createFileRoute("/student/connect")({
   component: StudentConnect,
 });
 
+const WA_LINK = "https://wa.me/14155238886?text=join%20condition-hand";
+
+type Msg = { from: "me" | "bot"; text: string };
+
 function StudentConnect() {
-  const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
+  const [name, setName] = useState("Queen");
+  const [chatOpen, setChatOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Msg[]>([
+    { from: "bot", text: "Hi! I'm your campus AI 👋 Ask me anything about classes, exams or assignments." },
+  ]);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth", search: { role: "student" } });
-  }, [loading, user, navigate]);
+    try {
+      const stored = localStorage.getItem("ce_student_name");
+      const id = localStorage.getItem("ce_student_id");
+      if (!id) {
+        navigate({ to: "/student/login" });
+        return;
+      }
+      if (stored) setName(stored);
+    } catch {}
+  }, [navigate]);
 
-  const waNumber = "94770000000";
-  const waMessage = encodeURIComponent("Hi CampusEase AI, I need help");
-  const waLink = `https://wa.me/${waNumber}?text=${waMessage}`;
-  const qrSrc = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(waLink)}&bgcolor=ffffff&color=4F32C7&margin=10`;
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages, chatOpen]);
+
+  function handleLogout() {
+    try {
+      localStorage.removeItem("ce_student_name");
+      localStorage.removeItem("ce_student_id");
+    } catch {}
+    navigate({ to: "/" });
+  }
+
+  function sendMessage(e: React.FormEvent) {
+    e.preventDefault();
+    const text = input.trim();
+    if (!text) return;
+    setMessages((m) => [...m, { from: "me", text }]);
+    setInput("");
+    setTimeout(() => {
+      setMessages((m) => [
+        ...m,
+        { from: "bot", text: "Got it! Connect on WhatsApp for full AI replies — just scan the QR above." },
+      ]);
+    }, 700);
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full opacity-30 blur-3xl" style={{ background: "var(--grad-hero)" }} />
+      <div
+        className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full opacity-30 blur-3xl"
+        style={{ background: "var(--grad-hero)" }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full opacity-30 blur-3xl"
+        style={{ background: "var(--grad-hero)" }}
+      />
 
-      <header className="relative z-10 mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-        <Link to="/" className="text-lg font-semibold tracking-tight">CampusEase<span className="text-primary">.lk</span></Link>
-        <div className="flex items-center gap-2">
-          <Link to="/dashboard" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
-            <LayoutDashboard className="h-4 w-4" /> Dashboard
-          </Link>
-          <button onClick={() => signOut().then(() => navigate({ to: "/" }))} className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80">
-            <LogOut className="h-4 w-4" />
-          </button>
-        </div>
+      <header className="relative z-10 mx-auto flex max-w-2xl items-center justify-between px-5 py-5">
+        <Link to="/" className="text-base font-semibold tracking-tight">
+          CampusEase<span className="text-primary">.lk</span>
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80"
+          aria-label="Logout"
+        >
+          <LogOut className="h-4 w-4" />
+        </button>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-5xl px-6 pb-20">
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-medium text-muted-foreground">
-            <Sparkles className="h-3.5 w-3.5 text-primary" /> AI Connect
+      <main className="relative z-10 mx-auto max-w-2xl px-5 pb-24">
+        <div className="mb-6 text-center">
+          <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full glass px-3 py-1 text-[11px] font-medium text-muted-foreground">
+            <Sparkles className="h-3 w-3 text-primary" /> AI Connect
           </div>
-          <h1 className="text-3xl font-bold sm:text-4xl">Chat with your <span className="gradient-text">Campus AI</span></h1>
-          <p className="mt-3 text-muted-foreground">Open WhatsApp instantly or scan the QR with your phone.</p>
+          <h1 className="text-2xl font-bold sm:text-3xl">
+            Hi {name}, Connect with <span className="gradient-text">AI</span> 👑
+          </h1>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* WhatsApp button card */}
-          <div className="glass-strong relative rounded-3xl p-8">
-            <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: "linear-gradient(135deg, #25D366, #128C7E)" }}>
-                <MessageCircle className="h-6 w-6 text-white" />
+        {/* Gradient-bordered glass card */}
+        <div
+          className="rounded-3xl p-[1.5px]"
+          style={{ background: "linear-gradient(135deg, #3B82F6, #8B5CF6)" }}
+        >
+          <div className="rounded-[calc(1.5rem-1.5px)] bg-white/60 p-6 backdrop-blur-xl sm:p-8">
+            {/* QR */}
+            <div className="flex flex-col items-center">
+              <div className="rounded-2xl bg-white p-3 shadow-md">
+                <img
+                  src={qrImage}
+                  alt="Scan to chat with CampusEase AI on WhatsApp"
+                  width={220}
+                  height={220}
+                  style={{ width: 220, height: "auto", borderRadius: 16 }}
+                  className="block"
+                />
               </div>
-              <div>
-                <h2 className="font-semibold">CampusEase AI Assistant</h2>
-                <p className="text-xs text-muted-foreground">Online · responds in seconds</p>
+
+              {/* Steps */}
+              <div className="mt-6 w-full">
+                <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
+                  <Step n={1} label="Scan QR" />
+                  <Arrow />
+                  <Step n={2} label="Send message" />
+                  <Arrow />
+                  <Step n={3} label="Ask anything" />
+                </div>
               </div>
+
+              {/* Chat on Web button */}
+              <button
+                onClick={() => setChatOpen(true)}
+                className="btn-hero mt-7 flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 text-sm font-semibold sm:w-auto sm:px-8"
+              >
+                <MessageCircle className="h-4 w-4" /> Chat on Web
+              </button>
+
+              <a
+                href={WA_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+              >
+                Or open WhatsApp directly
+              </a>
             </div>
-
-            <div className="mb-6 space-y-2">
-              <Bubble from="bot">Hi! I'm your campus AI 👋 Ask me anything about classes, exams or assignments.</Bubble>
-              <Bubble from="me">When is my next lecture?</Bubble>
-              <Bubble from="bot">Tomorrow at 9:00 AM — CS401 Software Engineering, Hall B.</Bubble>
-            </div>
-
-            <a href={waLink} target="_blank" rel="noreferrer" className="btn-hero flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-4 font-semibold">
-              <MessageCircle className="h-5 w-5" /> Chat on WhatsApp
-            </a>
-          </div>
-
-          {/* QR card */}
-          <div className="glass-strong rounded-3xl p-8 text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1 text-xs font-medium">
-              <QrCode className="h-3.5 w-3.5" /> Scan with your phone
-            </div>
-            <h2 className="text-lg font-semibold">QR to AI Bot</h2>
-            <p className="mt-1 text-sm text-muted-foreground">Point your camera here to open WhatsApp</p>
-
-            <div className="mx-auto mt-6 inline-block rounded-3xl bg-white p-4 shadow-md">
-              <img src={qrSrc} alt="QR code to open WhatsApp AI assistant" className="h-60 w-60" />
-            </div>
-
-            <p className="mt-6 text-xs text-muted-foreground">Powered by WhatsApp · CampusEase AI</p>
           </div>
         </div>
       </main>
+
+      {/* Chat sheet */}
+      {chatOpen && (
+        <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/30 backdrop-blur-sm sm:items-center">
+          <div
+            className="w-full max-w-md rounded-t-3xl sm:rounded-3xl"
+            style={{ background: "linear-gradient(135deg, #3B82F6, #8B5CF6)", padding: 1.5 }}
+          >
+            <div className="rounded-t-[calc(1.5rem-1.5px)] bg-white/95 backdrop-blur-xl sm:rounded-[calc(1.5rem-1.5px)]">
+              <div className="flex items-center justify-between border-b border-border px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="flex h-8 w-8 items-center justify-center rounded-full"
+                    style={{ background: "linear-gradient(135deg, #3B82F6, #8B5CF6)" }}
+                  >
+                    <Sparkles className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="text-sm">
+                    <div className="font-semibold leading-none">CampusEase AI</div>
+                    <div className="text-[11px] text-muted-foreground">Online</div>
+                  </div>
+                </div>
+                <button onClick={() => setChatOpen(false)} className="rounded-full p-1.5 hover:bg-secondary" aria-label="Close">
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              <div ref={scrollRef} className="h-80 space-y-2 overflow-y-auto px-4 py-4">
+                {messages.map((m, i) => (
+                  <div key={i} className={`flex ${m.from === "me" ? "justify-end" : "justify-start"}`}>
+                    <div
+                      className={`max-w-[80%] rounded-2xl px-3.5 py-2 text-sm ${
+                        m.from === "me"
+                          ? "rounded-br-sm bg-primary text-primary-foreground"
+                          : "rounded-bl-sm border border-border bg-white text-foreground"
+                      }`}
+                    >
+                      {m.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <form onSubmit={sendMessage} className="flex items-center gap-2 border-t border-border p-3">
+                <input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type a message…"
+                  className="flex-1 rounded-full border border-border bg-white px-4 py-2.5 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/30"
+                />
+                <button type="submit" className="btn-hero flex h-10 w-10 items-center justify-center rounded-full" aria-label="Send">
+                  <Send className="h-4 w-4" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-function Bubble({ from, children }: { from: "me" | "bot"; children: React.ReactNode }) {
-  const me = from === "me";
+function Step({ n, label }: { n: number; label: string }) {
   return (
-    <div className={`flex ${me ? "justify-end" : "justify-start"}`}>
-      <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${me ? "bg-primary text-primary-foreground rounded-br-sm" : "bg-white/80 text-foreground rounded-bl-sm border border-border"}`}>
-        {children}
-      </div>
+    <div className="flex items-center gap-2 rounded-xl bg-white/70 px-3 py-2 text-xs font-medium shadow-sm sm:flex-col sm:gap-1 sm:bg-transparent sm:px-2 sm:shadow-none">
+      <span
+        className="flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold text-white"
+        style={{ background: "linear-gradient(135deg, #3B82F6, #8B5CF6)" }}
+      >
+        {n}
+      </span>
+      <span className="text-foreground">{label}</span>
     </div>
   );
+}
+
+function Arrow() {
+  return <span className="hidden text-muted-foreground sm:inline">→</span>;
 }
