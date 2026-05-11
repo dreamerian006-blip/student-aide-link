@@ -128,7 +128,7 @@ function AuthPage() {
           <button
             type="button"
             onClick={async () => {
-              const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+              const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}${destination}` });
               if (result.error) toast.error("Google sign-in failed");
             }}
             className="flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-white px-6 py-3 text-sm font-medium text-foreground shadow-sm transition hover:bg-secondary"
