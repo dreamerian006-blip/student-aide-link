@@ -115,6 +115,14 @@ function StudentConnect() {
                 />
               </div>
 
+              {/* Continue to Dashboard */}
+              <button
+                onClick={() => navigate({ to: "/dashboard" })}
+                className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md transition hover:opacity-90 sm:w-auto sm:px-8"
+              >
+                Continue to Dashboard <ArrowRight className="h-4 w-4" />
+              </button>
+
               {/* Steps */}
               <div className="mt-6 w-full">
                 <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
