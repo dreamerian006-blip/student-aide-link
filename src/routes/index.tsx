@@ -55,7 +55,8 @@ function Landing() {
               <Users className="h-5 w-5" /> For Lecturers
             </Link>
             <Link
-              to="/student/login"
+              to="/auth"
+              search={{ role: "student" }}
               className="glass-strong inline-flex w-full items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-semibold text-foreground hover:bg-white sm:w-auto"
             >
               <GraduationCap className="h-5 w-5 text-primary" /> For Students

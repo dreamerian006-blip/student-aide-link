@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentLoginRouteImport } from './routes/student.login'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
+import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
 import { Route as LecturerUploadRouteImport } from './routes/lecturer.upload'
 
 const DashboardRoute = DashboardRouteImport.update({
@@ -41,6 +42,11 @@ const StudentConnectRoute = StudentConnectRouteImport.update({
   path: '/student/connect',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentAiConnectRoute = StudentAiConnectRouteImport.update({
+  id: '/student/ai-connect',
+  path: '/student/ai-connect',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerUploadRoute = LecturerUploadRouteImport.update({
   id: '/lecturer/upload',
   path: '/lecturer/upload',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/lecturer/upload': typeof LecturerUploadRoute
+  '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/login': typeof StudentLoginRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/lecturer/upload': typeof LecturerUploadRoute
+  '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/login': typeof StudentLoginRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/lecturer/upload': typeof LecturerUploadRoute
+  '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/login': typeof StudentLoginRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/lecturer/upload'
+    | '/student/ai-connect'
     | '/student/connect'
     | '/student/login'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/lecturer/upload'
+    | '/student/ai-connect'
     | '/student/connect'
     | '/student/login'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/lecturer/upload'
+    | '/student/ai-connect'
     | '/student/connect'
     | '/student/login'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   LecturerUploadRoute: typeof LecturerUploadRoute
+  StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
   StudentLoginRoute: typeof StudentLoginRoute
 }
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentConnectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/ai-connect': {
+      id: '/student/ai-connect'
+      path: '/student/ai-connect'
+      fullPath: '/student/ai-connect'
+      preLoaderRoute: typeof StudentAiConnectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/upload': {
       id: '/lecturer/upload'
       path: '/lecturer/upload'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   LecturerUploadRoute: LecturerUploadRoute,
+  StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
   StudentLoginRoute: StudentLoginRoute,
 }

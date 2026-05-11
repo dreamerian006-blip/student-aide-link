@@ -46,7 +46,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
-      navigate({ to: isLecturer ? "/lecturer/upload" : "/student/connect" });
+      navigate({ to: isLecturer ? "/lecturer/upload" : "/student/ai-connect" });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Authentication failed";
       toast.error(msg);
@@ -71,7 +71,11 @@ function AuthPage() {
             </div>
             <div>
               <h1 className="text-xl font-bold">{isLecturer ? "Lecturer" : "Student"} Portal</h1>
-              <p className="text-xs text-muted-foreground">{mode === "login" ? "Welcome back" : "Create your account"}</p>
+              <p className="text-xs text-muted-foreground">
+                {mode === "login"
+                  ? isLecturer ? "Welcome back" : "Welcome back, future grad 👑"
+                  : "Create your account"}
+              </p>
             </div>
           </div>
 
