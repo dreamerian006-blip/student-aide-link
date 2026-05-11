@@ -15,7 +15,7 @@ type Msg = { from: "me" | "bot"; text: string };
 
 function StudentConnect() {
   const navigate = useNavigate();
-  const [name, setName] = useState("Queen");
+  const { user } = useAuth();
   const [chatOpen, setChatOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Msg[]>([
@@ -23,24 +23,17 @@ function StudentConnect() {
   ]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("ce_student_name");
-      const id = localStorage.getItem("ce_student_id");
-      if (!id) {
-        navigate({ to: "/student/login" });
-        return;
-      }
-      if (stored) setName(stored);
-    } catch {}
-  }, [navigate]);
+  const displayName: string =
+    (user?.user_metadata?.full_name as string | undefined)?.split(" ")[0] ||
+    (user?.email ? user.email.split("@")[0] : "");
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, chatOpen]);
 
-  function handleLogout() {
+  async function handleLogout() {
     try {
+      await supabase.auth.signOut();
       localStorage.removeItem("ce_student_name");
       localStorage.removeItem("ce_student_id");
     } catch {}
