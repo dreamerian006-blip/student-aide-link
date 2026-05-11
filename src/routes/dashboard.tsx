@@ -84,6 +84,7 @@ function Dashboard() {
           {TILES.map((t) => (
             <button
               key={t.title}
+              onClick={() => t.to && navigate({ to: t.to })}
               className="glass-strong group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-1"
             >
               <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md" style={{ background: TONE_BG[t.tone] }}>
