@@ -10,8 +10,8 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-const TILES = [
-  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1 },
+const TILES: { icon: any; title: string; desc: string; tone: number; to?: string }[] = [
+  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
   { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2 },
   { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3 },
   { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1 },
