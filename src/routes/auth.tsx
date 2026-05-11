@@ -46,7 +46,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
-      navigate({ to: isLecturer ? "/lecturer/upload" : "/student/connect" });
+      navigate({ to: isLecturer ? "/lecturer/upload" : "/student/ai-connect" });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Authentication failed";
       toast.error(msg);
