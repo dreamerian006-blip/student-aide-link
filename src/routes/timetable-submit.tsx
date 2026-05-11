@@ -37,6 +37,7 @@ const FACULTIES = [
   "Faculty of Agriculture",
   "Faculty of Architecture",
   "Faculty of Education",
+  "Faculty of Technology",
   "Other",
 ];
 
