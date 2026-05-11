@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, LogOut, Sparkles, Send, X } from "lucide-react";
+import { MessageCircle, LogOut, Sparkles, Send, X, ArrowRight } from "lucide-react";
 import qrImage from "@/assets/campusease-qr.png";
+import { useAuth } from "@/lib/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/student/connect")({
   component: StudentConnect,
