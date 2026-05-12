@@ -12,11 +12,11 @@ export const Route = createFileRoute("/dashboard")({
 
 const TILES: { icon: any; title: string; desc: string; tone: number; to?: string }[] = [
   { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
-  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2 },
-  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3 },
+  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
+  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
   { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1 },
   { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2 },
-  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3 },
+  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
   { icon: FileSignature, title: "University Forms", desc: "Apply & submit forms", tone: 1 },
   { icon: Bell, title: "Events & Notices", desc: "Stay updated", tone: 2 },
 ];
