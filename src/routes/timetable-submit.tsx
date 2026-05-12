@@ -28,6 +28,7 @@ const UNIVERSITIES = [
 
 const FACULTIES = [
   "Faculty of Science",
+  "Faculty of Technology",
   "Faculty of Engineering",
   "Faculty of Medicine",
   "Faculty of Arts",

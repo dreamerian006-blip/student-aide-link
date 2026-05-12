@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TimetableSubmitRouteImport } from './routes/timetable-submit'
+import { Route as OnlineClassSubmitRouteImport } from './routes/online-class-submit'
+import { Route as ExamSubmitRouteImport } from './routes/exam-submit'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AssignmentSubmitRouteImport } from './routes/assignment-submit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentLoginRouteImport } from './routes/student.login'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
@@ -23,6 +26,16 @@ const TimetableSubmitRoute = TimetableSubmitRouteImport.update({
   path: '/timetable-submit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnlineClassSubmitRoute = OnlineClassSubmitRouteImport.update({
+  id: '/online-class-submit',
+  path: '/online-class-submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamSubmitRoute = ExamSubmitRouteImport.update({
+  id: '/exam-submit',
+  path: '/exam-submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -31,6 +44,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssignmentSubmitRoute = AssignmentSubmitRouteImport.update({
+  id: '/assignment-submit',
+  path: '/assignment-submit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,8 +79,11 @@ const LecturerUploadRoute = LecturerUploadRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/exam-submit': typeof ExamSubmitRoute
+  '/online-class-submit': typeof OnlineClassSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/lecturer/upload': typeof LecturerUploadRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
@@ -71,8 +92,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/exam-submit': typeof ExamSubmitRoute
+  '/online-class-submit': typeof OnlineClassSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/lecturer/upload': typeof LecturerUploadRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
@@ -82,8 +106,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/exam-submit': typeof ExamSubmitRoute
+  '/online-class-submit': typeof OnlineClassSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/lecturer/upload': typeof LecturerUploadRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
@@ -94,8 +121,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assignment-submit'
     | '/auth'
     | '/dashboard'
+    | '/exam-submit'
+    | '/online-class-submit'
     | '/timetable-submit'
     | '/lecturer/upload'
     | '/student/ai-connect'
@@ -104,8 +134,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assignment-submit'
     | '/auth'
     | '/dashboard'
+    | '/exam-submit'
+    | '/online-class-submit'
     | '/timetable-submit'
     | '/lecturer/upload'
     | '/student/ai-connect'
@@ -114,8 +147,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assignment-submit'
     | '/auth'
     | '/dashboard'
+    | '/exam-submit'
+    | '/online-class-submit'
     | '/timetable-submit'
     | '/lecturer/upload'
     | '/student/ai-connect'
@@ -125,8 +161,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssignmentSubmitRoute: typeof AssignmentSubmitRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
+  ExamSubmitRoute: typeof ExamSubmitRoute
+  OnlineClassSubmitRoute: typeof OnlineClassSubmitRoute
   TimetableSubmitRoute: typeof TimetableSubmitRoute
   LecturerUploadRoute: typeof LecturerUploadRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
@@ -143,6 +182,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TimetableSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/online-class-submit': {
+      id: '/online-class-submit'
+      path: '/online-class-submit'
+      fullPath: '/online-class-submit'
+      preLoaderRoute: typeof OnlineClassSubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exam-submit': {
+      id: '/exam-submit'
+      path: '/exam-submit'
+      fullPath: '/exam-submit'
+      preLoaderRoute: typeof ExamSubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -155,6 +208,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assignment-submit': {
+      id: '/assignment-submit'
+      path: '/assignment-submit'
+      fullPath: '/assignment-submit'
+      preLoaderRoute: typeof AssignmentSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -197,8 +257,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssignmentSubmitRoute: AssignmentSubmitRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
+  ExamSubmitRoute: ExamSubmitRoute,
+  OnlineClassSubmitRoute: OnlineClassSubmitRoute,
   TimetableSubmitRoute: TimetableSubmitRoute,
   LecturerUploadRoute: LecturerUploadRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,

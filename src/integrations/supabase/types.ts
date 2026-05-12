@@ -32,6 +32,78 @@ export type Database = {
         }
         Relationships: []
       }
+      student_submissions: {
+        Row: {
+          academic_year: string
+          created_at: string
+          data: Json
+          day: string | null
+          department: string
+          end_time: string | null
+          faculty: string
+          full_name: string
+          hall: string | null
+          id: string
+          lecturer: string | null
+          semester: string
+          start_time: string | null
+          status: string
+          student_id: string
+          subject_id: string
+          subject_name: string
+          submission_type: string
+          university: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          academic_year: string
+          created_at?: string
+          data?: Json
+          day?: string | null
+          department: string
+          end_time?: string | null
+          faculty: string
+          full_name: string
+          hall?: string | null
+          id?: string
+          lecturer?: string | null
+          semester: string
+          start_time?: string | null
+          status?: string
+          student_id: string
+          subject_id: string
+          subject_name: string
+          submission_type: string
+          university: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          academic_year?: string
+          created_at?: string
+          data?: Json
+          day?: string | null
+          department?: string
+          end_time?: string | null
+          faculty?: string
+          full_name?: string
+          hall?: string | null
+          id?: string
+          lecturer?: string | null
+          semester?: string
+          start_time?: string | null
+          status?: string
+          student_id?: string
+          subject_id?: string
+          subject_name?: string
+          submission_type?: string
+          university?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       timetables: {
         Row: {
           academic_year: string
