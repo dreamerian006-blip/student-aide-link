@@ -62,6 +62,87 @@ export const emptyCommon = (): CommonFields => ({
   day: "", startTime: "", endTime: "", hall: "", lecturer: "",
 });
 
+export type StudentOnly = {
+  fullName: string;
+  studentId: string;
+  university: string;
+  faculty: string;
+  department: string;
+  academicYear: string;
+  semester: string;
+};
+
+export const emptyStudentOnly = (): StudentOnly => ({
+  fullName: "", studentId: "", university: "", faculty: "", department: "",
+  academicYear: "", semester: "",
+});
+
+export function validateStudentOnly(v: StudentOnly): string | null {
+  const required: (keyof StudentOnly)[] = [
+    "fullName","studentId","university","faculty","department","academicYear","semester",
+  ];
+  for (const k of required) if (!v[k]) return "Please fill all required student fields";
+  return null;
+}
+
+export function studentOnlyToInsert(v: StudentOnly) {
+  return {
+    full_name: v.fullName,
+    student_id: v.studentId,
+    university: v.university,
+    faculty: v.faculty,
+    department: v.department,
+    academic_year: v.academicYear,
+    semester: v.semester,
+  };
+}
+
+export function StudentDetailsFields({
+  v, set,
+}: { v: StudentOnly; set: (k: keyof StudentOnly, val: string) => void }) {
+  return (
+    <section className="rounded-2xl border bg-card p-4 sm:p-6 mb-6">
+      <h2 className="text-lg font-semibold mb-4">Student Details</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label="Name with Initial" required>
+          <input className={inputCls} value={v.fullName} onChange={e => set("fullName", e.target.value)} />
+        </Field>
+        <Field label="Student ID" required>
+          <input className={inputCls} value={v.studentId} onChange={e => set("studentId", e.target.value)} />
+        </Field>
+        <Field label="Department" required>
+          <input className={inputCls} value={v.department} onChange={e => set("department", e.target.value)} />
+        </Field>
+        <Field label="Faculty" required>
+          <select className={inputCls} value={v.faculty} onChange={e => set("faculty", e.target.value)}>
+            <option value="">Select faculty</option>
+            {FACULTIES.map(f => <option key={f} value={f}>{f}</option>)}
+          </select>
+        </Field>
+        <Field label="University" required>
+          <select className={inputCls} value={v.university} onChange={e => set("university", e.target.value)}>
+            <option value="">Select university</option>
+            {UNIVERSITIES.map(u => <option key={u} value={u}>{u}</option>)}
+          </select>
+        </Field>
+        <Field label="Year" required>
+          <select className={inputCls} value={v.academicYear} onChange={e => set("academicYear", e.target.value)}>
+            <option value="">Select year</option>
+            {["Year 1", "Year 2", "Year 3", "Year 4"].map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+        </Field>
+        <Field label="Semester" required>
+          <select className={inputCls} value={v.semester} onChange={e => set("semester", e.target.value)}>
+            <option value="">Select semester</option>
+            <option value="Semester 1">Semester 1</option>
+            <option value="Semester 2">Semester 2</option>
+          </select>
+        </Field>
+      </div>
+    </section>
+  );
+}
+
 export function CommonStudentFields({
   v, set,
 }: { v: CommonFields; set: (k: keyof CommonFields, val: string) => void }) {
