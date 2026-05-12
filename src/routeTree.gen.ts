@@ -13,6 +13,7 @@ import { Route as TimetableSubmitRouteImport } from './routes/timetable-submit'
 import { Route as ExamSubmitRouteImport } from './routes/exam-submit'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AssignmentSubmitRouteImport } from './routes/assignment-submit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentLoginRouteImport } from './routes/student.login'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
@@ -37,6 +38,11 @@ const DashboardRoute = DashboardRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssignmentSubmitRoute = AssignmentSubmitRouteImport.update({
+  id: '/assignment-submit',
+  path: '/assignment-submit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,6 +73,7 @@ const LecturerUploadRoute = LecturerUploadRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/exam-submit': typeof ExamSubmitRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/exam-submit': typeof ExamSubmitRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/exam-submit': typeof ExamSubmitRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assignment-submit'
     | '/auth'
     | '/dashboard'
     | '/exam-submit'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assignment-submit'
     | '/auth'
     | '/dashboard'
     | '/exam-submit'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assignment-submit'
     | '/auth'
     | '/dashboard'
     | '/exam-submit'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssignmentSubmitRoute: typeof AssignmentSubmitRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   ExamSubmitRoute: typeof ExamSubmitRoute
@@ -175,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assignment-submit': {
+      id: '/assignment-submit'
+      path: '/assignment-submit'
+      fullPath: '/assignment-submit'
+      preLoaderRoute: typeof AssignmentSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssignmentSubmitRoute: AssignmentSubmitRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   ExamSubmitRoute: ExamSubmitRoute,
