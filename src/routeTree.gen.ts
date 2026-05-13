@@ -15,6 +15,7 @@ import { Route as StudyMaterialsSubmitRouteImport } from './routes/study-materia
 import { Route as OnlineClassSubmitRouteImport } from './routes/online-class-submit'
 import { Route as LecturerContactsSubmitRouteImport } from './routes/lecturer-contacts-submit'
 import { Route as ExamSubmitRouteImport } from './routes/exam-submit'
+import { Route as EventsNotesSubmitRouteImport } from './routes/events-notes-submit'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssignmentSubmitRouteImport } from './routes/assignment-submit'
@@ -52,6 +53,11 @@ const LecturerContactsSubmitRoute = LecturerContactsSubmitRouteImport.update({
 const ExamSubmitRoute = ExamSubmitRouteImport.update({
   id: '/exam-submit',
   path: '/exam-submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsNotesSubmitRoute = EventsNotesSubmitRouteImport.update({
+  id: '/events-notes-submit',
+  path: '/events-notes-submit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/events-notes-submit': typeof EventsNotesSubmitRoute
   '/exam-submit': typeof ExamSubmitRoute
   '/lecturer-contacts-submit': typeof LecturerContactsSubmitRoute
   '/online-class-submit': typeof OnlineClassSubmitRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/events-notes-submit': typeof EventsNotesSubmitRoute
   '/exam-submit': typeof ExamSubmitRoute
   '/lecturer-contacts-submit': typeof LecturerContactsSubmitRoute
   '/online-class-submit': typeof OnlineClassSubmitRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/assignment-submit': typeof AssignmentSubmitRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/events-notes-submit': typeof EventsNotesSubmitRoute
   '/exam-submit': typeof ExamSubmitRoute
   '/lecturer-contacts-submit': typeof LecturerContactsSubmitRoute
   '/online-class-submit': typeof OnlineClassSubmitRoute
@@ -151,6 +160,7 @@ export interface FileRouteTypes {
     | '/assignment-submit'
     | '/auth'
     | '/dashboard'
+    | '/events-notes-submit'
     | '/exam-submit'
     | '/lecturer-contacts-submit'
     | '/online-class-submit'
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/assignment-submit'
     | '/auth'
     | '/dashboard'
+    | '/events-notes-submit'
     | '/exam-submit'
     | '/lecturer-contacts-submit'
     | '/online-class-submit'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/assignment-submit'
     | '/auth'
     | '/dashboard'
+    | '/events-notes-submit'
     | '/exam-submit'
     | '/lecturer-contacts-submit'
     | '/online-class-submit'
@@ -200,6 +212,7 @@ export interface RootRouteChildren {
   AssignmentSubmitRoute: typeof AssignmentSubmitRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
+  EventsNotesSubmitRoute: typeof EventsNotesSubmitRoute
   ExamSubmitRoute: typeof ExamSubmitRoute
   LecturerContactsSubmitRoute: typeof LecturerContactsSubmitRoute
   OnlineClassSubmitRoute: typeof OnlineClassSubmitRoute
@@ -254,6 +267,13 @@ declare module '@tanstack/react-router' {
       path: '/exam-submit'
       fullPath: '/exam-submit'
       preLoaderRoute: typeof ExamSubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events-notes-submit': {
+      id: '/events-notes-submit'
+      path: '/events-notes-submit'
+      fullPath: '/events-notes-submit'
+      preLoaderRoute: typeof EventsNotesSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -320,6 +340,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssignmentSubmitRoute: AssignmentSubmitRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
+  EventsNotesSubmitRoute: EventsNotesSubmitRoute,
   ExamSubmitRoute: ExamSubmitRoute,
   LecturerContactsSubmitRoute: LecturerContactsSubmitRoute,
   OnlineClassSubmitRoute: OnlineClassSubmitRoute,
