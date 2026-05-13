@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UniversityFormsSubmitRouteImport } from './routes/university-forms-submit'
 import { Route as TimetableSubmitRouteImport } from './routes/timetable-submit'
 import { Route as StudyMaterialsSubmitRouteImport } from './routes/study-materials-submit'
 import { Route as OnlineClassSubmitRouteImport } from './routes/online-class-submit'
@@ -23,6 +24,11 @@ import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
 import { Route as LecturerUploadRouteImport } from './routes/lecturer.upload'
 
+const UniversityFormsSubmitRoute = UniversityFormsSubmitRouteImport.update({
+  id: '/university-forms-submit',
+  path: '/university-forms-submit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TimetableSubmitRoute = TimetableSubmitRouteImport.update({
   id: '/timetable-submit',
   path: '/timetable-submit',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/online-class-submit': typeof OnlineClassSubmitRoute
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
+  '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/upload': typeof LecturerUploadRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/online-class-submit': typeof OnlineClassSubmitRoute
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
+  '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/upload': typeof LecturerUploadRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/online-class-submit': typeof OnlineClassSubmitRoute
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
+  '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/upload': typeof LecturerUploadRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/online-class-submit'
     | '/study-materials-submit'
     | '/timetable-submit'
+    | '/university-forms-submit'
     | '/lecturer/upload'
     | '/student/ai-connect'
     | '/student/connect'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/online-class-submit'
     | '/study-materials-submit'
     | '/timetable-submit'
+    | '/university-forms-submit'
     | '/lecturer/upload'
     | '/student/ai-connect'
     | '/student/connect'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/online-class-submit'
     | '/study-materials-submit'
     | '/timetable-submit'
+    | '/university-forms-submit'
     | '/lecturer/upload'
     | '/student/ai-connect'
     | '/student/connect'
@@ -193,6 +205,7 @@ export interface RootRouteChildren {
   OnlineClassSubmitRoute: typeof OnlineClassSubmitRoute
   StudyMaterialsSubmitRoute: typeof StudyMaterialsSubmitRoute
   TimetableSubmitRoute: typeof TimetableSubmitRoute
+  UniversityFormsSubmitRoute: typeof UniversityFormsSubmitRoute
   LecturerUploadRoute: typeof LecturerUploadRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
@@ -201,6 +214,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/university-forms-submit': {
+      id: '/university-forms-submit'
+      path: '/university-forms-submit'
+      fullPath: '/university-forms-submit'
+      preLoaderRoute: typeof UniversityFormsSubmitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/timetable-submit': {
       id: '/timetable-submit'
       path: '/timetable-submit'
@@ -305,6 +325,7 @@ const rootRouteChildren: RootRouteChildren = {
   OnlineClassSubmitRoute: OnlineClassSubmitRoute,
   StudyMaterialsSubmitRoute: StudyMaterialsSubmitRoute,
   TimetableSubmitRoute: TimetableSubmitRoute,
+  UniversityFormsSubmitRoute: UniversityFormsSubmitRoute,
   LecturerUploadRoute: LecturerUploadRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
