@@ -10,16 +10,22 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-type Tile = { icon: any; title: string; desc: string; tone: number; to?: string; lecturerOnly?: boolean };
-const TILES: Tile[] = [
+type Tile = { icon: any; title: string; desc: string; tone: number; to?: string };
+
+const STUDENT_TILES: Tile[] = [
   { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
   { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
   { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
   { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/study-materials-submit" },
   { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer-contacts-submit" },
   { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
-  { icon: FileSignature, title: "University Forms", desc: "Apply & submit forms", tone: 1, lecturerOnly: true },
-  { icon: Bell, title: "Events & Notices", desc: "Stay updated", tone: 2, lecturerOnly: true },
+];
+
+const LECTURER_TILES: Tile[] = [
+  { icon: BookOpen, title: "Study Materials", desc: "Upload notes, slides, past papers", tone: 1, to: "/study-materials-submit" },
+  { icon: Users, title: "Lecturer Contacts", desc: "Manage lecturer details", tone: 2, to: "/lecturer-contacts-submit" },
+  { icon: FileSignature, title: "University Forms", desc: "Upload forms, notices, circulars", tone: 1, to: "/university-forms-submit" },
+  { icon: Bell, title: "Events & Notes", desc: "Post events, deadlines, notices", tone: 2, to: "/events-notes-submit" },
 ];
 
 const TONE_BG: Record<number, string> = {
@@ -37,6 +43,8 @@ function Dashboard() {
   }, [loading, user, navigate]);
 
   const isLecturer = role === "lecturer";
+  const tiles = isLecturer ? LECTURER_TILES : STUDENT_TILES;
+  const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || (user?.email ? user.email.split("@")[0] : null);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -50,6 +58,7 @@ function Dashboard() {
           <span className="text-lg font-semibold tracking-tight">CampusEase<span className="text-primary">.lk</span></span>
         </Link>
         <div className="flex items-center gap-2">
+          {displayName && <span className="hidden sm:inline text-sm font-medium text-foreground/80">{displayName}</span>}
           {isLecturer ? (
             <Link to="/lecturer/upload" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
               <Upload className="h-4 w-4" /> Upload
@@ -68,21 +77,19 @@ function Dashboard() {
       <main className="relative z-10 mx-auto max-w-6xl px-6 pb-20">
         <div className="mb-8">
           <p className="text-sm text-muted-foreground">{isLecturer ? "Lecturer" : "Student"} Dashboard</p>
-          {(() => {
-            const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || (user?.email ? user.email.split("@")[0] : null);
-            return (
-              <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#1a1a1a" }}>
-                {displayName ? `Welcome, ${displayName}` : "Welcome to CampusEase"}
-              </h1>
-            );
-          })()}
+          <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#1a1a1a" }}>
+            {displayName ? `Welcome, ${displayName}` : "Welcome to CampusEase"}
+          </h1>
           <p style={{ fontSize: "14px", color: "#666", marginTop: "4px" }}>
-            Access your academic resources below
+            {isLecturer ? "Manage and upload academic resources for your students" : "Access your academic resources below"}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {TILES.filter(t => isLecturer || !t.lecturerOnly).map((t) => (
+        <div className={isLecturer
+          ? "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto"
+          : "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+        }>
+          {tiles.map((t) => (
             <button
               key={t.title}
               onClick={() => t.to && navigate({ to: t.to })}
