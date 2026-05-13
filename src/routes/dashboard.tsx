@@ -82,7 +82,7 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {TILES.map((t) => (
+          {TILES.filter(t => isLecturer || !t.lecturerOnly).map((t) => (
             <button
               key={t.title}
               onClick={() => t.to && navigate({ to: t.to })}
