@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      lecturer_contacts: {
+        Row: {
+          created_at: string
+          department: string
+          email: string
+          faculty: string
+          id: string
+          lecturer_name: string
+          photo_path: string | null
+          university: string
+          updated_at: string
+          user_id: string
+          whatsapp_number: string
+          work_role: string
+        }
+        Insert: {
+          created_at?: string
+          department: string
+          email: string
+          faculty: string
+          id?: string
+          lecturer_name: string
+          photo_path?: string | null
+          university: string
+          updated_at?: string
+          user_id: string
+          whatsapp_number: string
+          work_role: string
+        }
+        Update: {
+          created_at?: string
+          department?: string
+          email?: string
+          faculty?: string
+          id?: string
+          lecturer_name?: string
+          photo_path?: string | null
+          university?: string
+          updated_at?: string
+          user_id?: string
+          whatsapp_number?: string
+          work_role?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -98,6 +143,57 @@ export type Database = {
           subject_id?: string
           subject_name?: string
           submission_type?: string
+          university?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_materials: {
+        Row: {
+          course_subject: string
+          created_at: string
+          department: string
+          description: string | null
+          faculty: string
+          file_path: string | null
+          id: string
+          link_url: string | null
+          material_type: string
+          subtitle_year: string | null
+          title: string
+          university: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          course_subject: string
+          created_at?: string
+          department: string
+          description?: string | null
+          faculty: string
+          file_path?: string | null
+          id?: string
+          link_url?: string | null
+          material_type: string
+          subtitle_year?: string | null
+          title: string
+          university: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          course_subject?: string
+          created_at?: string
+          department?: string
+          description?: string | null
+          faculty?: string
+          file_path?: string | null
+          id?: string
+          link_url?: string | null
+          material_type?: string
+          subtitle_year?: string | null
+          title?: string
           university?: string
           updated_at?: string
           user_id?: string
