@@ -10,15 +10,16 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-const TILES: { icon: any; title: string; desc: string; tone: number; to?: string }[] = [
+type Tile = { icon: any; title: string; desc: string; tone: number; to?: string; lecturerOnly?: boolean };
+const TILES: Tile[] = [
   { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
   { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
   { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
-  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1 },
-  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2 },
+  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/study-materials-submit" },
+  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer-contacts-submit" },
   { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
-  { icon: FileSignature, title: "University Forms", desc: "Apply & submit forms", tone: 1 },
-  { icon: Bell, title: "Events & Notices", desc: "Stay updated", tone: 2 },
+  { icon: FileSignature, title: "University Forms", desc: "Apply & submit forms", tone: 1, lecturerOnly: true },
+  { icon: Bell, title: "Events & Notices", desc: "Stay updated", tone: 2, lecturerOnly: true },
 ];
 
 const TONE_BG: Record<number, string> = {
@@ -81,7 +82,7 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {TILES.map((t) => (
+          {TILES.filter(t => isLecturer || !t.lecturerOnly).map((t) => (
             <button
               key={t.title}
               onClick={() => t.to && navigate({ to: t.to })}
