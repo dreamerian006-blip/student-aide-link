@@ -1,25 +1,25 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { useAuth } from "@/lib/use-auth";
+import { useRoleGuard } from "@/lib/use-role-guard";
 import {
   Calendar, BookOpen, FileText, Users, Video, ClipboardList, FileSignature,
-  LogOut, Upload, GraduationCap,
+  LogOut, GraduationCap, Loader2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/lecturer/dashboard")({
   component: LecturerDashboard,
 });
 
-type Tile = { icon: any; title: string; desc: string; tone: number; to?: string };
+type Tile = { icon: any; title: string; desc: string; tone: number; to: string };
 
 const TILES: Tile[] = [
-  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
-  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
-  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
-  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/study-materials-submit" },
-  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer-contacts-submit" },
-  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
-  { icon: FileSignature, title: "University Forms", desc: "Access and submit university documents", tone: 1, to: "/university-forms-submit" },
+  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/lecturer/timetable" },
+  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/lecturer/exam-schedule" },
+  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/lecturer/assignments" },
+  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/lecturer/study-materials" },
+  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer/lecturer-contacts" },
+  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/lecturer/online-classes" },
+  { icon: FileSignature, title: "University Forms", desc: "Access and submit university documents", tone: 1, to: "/lecturer/university-forms" },
 ];
 
 const TONE_BG: Record<number, string> = {
@@ -29,12 +29,17 @@ const TONE_BG: Record<number, string> = {
 };
 
 function LecturerDashboard() {
-  const { user, loading, signOut } = useAuth();
+  const { allowed, loading } = useRoleGuard("lecturer");
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loading && !user) navigate({ to: "/" });
-  }, [loading, user, navigate]);
+  if (loading || !allowed) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
 
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || (user?.email ? user.email.split("@")[0] : null);
 
@@ -64,7 +69,7 @@ function LecturerDashboard() {
             {displayName ? `Welcome, ${displayName}` : "Welcome to CampusEase"}
           </h1>
           <p style={{ fontSize: "14px", color: "#666", marginTop: "4px" }}>
-            Access your academic resources below
+            Manage and upload academic resources for your students
           </p>
         </div>
 
@@ -72,7 +77,7 @@ function LecturerDashboard() {
           {TILES.map((t) => (
             <button
               key={t.title}
-              onClick={() => t.to && navigate({ to: t.to })}
+              onClick={() => navigate({ to: t.to })}
               className="glass-strong group relative overflow-hidden rounded-2xl p-5 text-left transition hover:-translate-y-1"
             >
               <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md" style={{ background: TONE_BG[t.tone] }}>
