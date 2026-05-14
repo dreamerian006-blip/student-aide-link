@@ -2,24 +2,23 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/lib/use-auth";
 import { useRoleGuard } from "@/lib/use-role-guard";
 import {
-  Calendar, BookOpen, FileText, Users, Video, ClipboardList, FileSignature,
-  LogOut, GraduationCap, Loader2,
+  Calendar, BookOpen, FileText, Users, Video, ClipboardList,
+  LogOut, MessageCircle, GraduationCap, Loader2,
 } from "lucide-react";
 
-export const Route = createFileRoute("/lecturer/dashboard")({
-  component: LecturerDashboard,
+export const Route = createFileRoute("/student/dashboard")({
+  component: StudentDashboard,
 });
 
 type Tile = { icon: any; title: string; desc: string; tone: number; to: string };
 
 const TILES: Tile[] = [
-  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/lecturer/timetable" },
-  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/lecturer/exam-schedule" },
-  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/lecturer/assignments" },
-  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/lecturer/study-materials" },
-  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer/lecturer-contacts" },
-  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/lecturer/online-classes" },
-  { icon: FileSignature, title: "University Forms", desc: "Access and submit university documents", tone: 1, to: "/lecturer/university-forms" },
+  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
+  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
+  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
+  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/study-materials-submit" },
+  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer-contacts-submit" },
+  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
 ];
 
 const TONE_BG: Record<number, string> = {
@@ -28,8 +27,8 @@ const TONE_BG: Record<number, string> = {
   3: "linear-gradient(135deg, oklch(0.55 0.22 280), oklch(0.6 0.22 250))",
 };
 
-function LecturerDashboard() {
-  const { allowed, loading } = useRoleGuard("lecturer");
+function StudentDashboard() {
+  const { allowed, loading } = useRoleGuard("student");
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -56,6 +55,9 @@ function LecturerDashboard() {
         </Link>
         <div className="flex items-center gap-2">
           {displayName && <span className="hidden sm:inline text-sm font-medium text-foreground/80">{displayName}</span>}
+          <Link to="/student/connect" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
+            <MessageCircle className="h-4 w-4" /> AI Connect
+          </Link>
           <button onClick={() => signOut().then(() => navigate({ to: "/" }))} className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80">
             <LogOut className="h-4 w-4" />
           </button>
@@ -64,12 +66,12 @@ function LecturerDashboard() {
 
       <main className="relative z-10 mx-auto max-w-6xl px-6 pb-20">
         <div className="mb-8">
-          <p className="text-sm text-muted-foreground">Lecturer Dashboard</p>
+          <p className="text-sm text-muted-foreground">Student Dashboard</p>
           <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#1a1a1a" }}>
             {displayName ? `Welcome, ${displayName}` : "Welcome to CampusEase"}
           </h1>
           <p style={{ fontSize: "14px", color: "#666", marginTop: "4px" }}>
-            Manage and upload academic resources for your students
+            Access your academic resources below
           </p>
         </div>
 
