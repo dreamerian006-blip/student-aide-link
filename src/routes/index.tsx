@@ -21,7 +21,7 @@ function Landing() {
 
   useEffect(() => {
     if (loading || !session) return;
-    navigate({ to: role === "lecturer" ? "/lecturer/upload" : "/student/ai-connect" });
+    navigate({ to: role === "lecturer" ? "/lecturer/dashboard" : "/student/ai-connect" });
   }, [session, role, loading, navigate]);
 
   return (

@@ -60,7 +60,7 @@ function Dashboard() {
         <div className="flex items-center gap-2">
           {displayName && <span className="hidden sm:inline text-sm font-medium text-foreground/80">{displayName}</span>}
           {isLecturer ? (
-            <Link to="/lecturer/upload" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
+            <Link to="/lecturer/dashboard" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
               <Upload className="h-4 w-4" /> Upload
             </Link>
           ) : (
