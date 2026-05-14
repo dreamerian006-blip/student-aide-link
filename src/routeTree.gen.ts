@@ -24,6 +24,7 @@ import { Route as StudentLoginRouteImport } from './routes/student.login'
 import { Route as StudentDashboardRouteImport } from './routes/student.dashboard'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
+import { Route as LecturerUniversityFormsRouteImport } from './routes/lecturer.university-forms'
 import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
 import { Route as LecturerStudyMaterialsRouteImport } from './routes/lecturer.study-materials'
 import { Route as LecturerOnlineClassesRouteImport } from './routes/lecturer.online-classes'
@@ -107,6 +108,11 @@ const StudentAiConnectRoute = StudentAiConnectRouteImport.update({
   path: '/student/ai-connect',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerUniversityFormsRoute = LecturerUniversityFormsRouteImport.update({
+  id: '/lecturer/university-forms',
+  path: '/lecturer/university-forms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerTimetableRoute = LecturerTimetableRouteImport.update({
   id: '/lecturer/timetable',
   path: '/lecturer/timetable',
@@ -163,6 +169,7 @@ export interface FileRoutesByFullPath {
   '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
   '/lecturer/study-materials': typeof LecturerStudyMaterialsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
+  '/lecturer/university-forms': typeof LecturerUniversityFormsRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -187,6 +194,7 @@ export interface FileRoutesByTo {
   '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
   '/lecturer/study-materials': typeof LecturerStudyMaterialsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
+  '/lecturer/university-forms': typeof LecturerUniversityFormsRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -212,6 +220,7 @@ export interface FileRoutesById {
   '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
   '/lecturer/study-materials': typeof LecturerStudyMaterialsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
+  '/lecturer/university-forms': typeof LecturerUniversityFormsRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/dashboard': typeof StudentDashboardRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/lecturer/online-classes'
     | '/lecturer/study-materials'
     | '/lecturer/timetable'
+    | '/lecturer/university-forms'
     | '/student/ai-connect'
     | '/student/connect'
     | '/student/dashboard'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/lecturer/online-classes'
     | '/lecturer/study-materials'
     | '/lecturer/timetable'
+    | '/lecturer/university-forms'
     | '/student/ai-connect'
     | '/student/connect'
     | '/student/dashboard'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/lecturer/online-classes'
     | '/lecturer/study-materials'
     | '/lecturer/timetable'
+    | '/lecturer/university-forms'
     | '/student/ai-connect'
     | '/student/connect'
     | '/student/dashboard'
@@ -311,6 +323,7 @@ export interface RootRouteChildren {
   LecturerOnlineClassesRoute: typeof LecturerOnlineClassesRoute
   LecturerStudyMaterialsRoute: typeof LecturerStudyMaterialsRoute
   LecturerTimetableRoute: typeof LecturerTimetableRoute
+  LecturerUniversityFormsRoute: typeof LecturerUniversityFormsRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
   StudentDashboardRoute: typeof StudentDashboardRoute
@@ -424,6 +437,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentAiConnectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/university-forms': {
+      id: '/lecturer/university-forms'
+      path: '/lecturer/university-forms'
+      fullPath: '/lecturer/university-forms'
+      preLoaderRoute: typeof LecturerUniversityFormsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/timetable': {
       id: '/lecturer/timetable'
       path: '/lecturer/timetable'
@@ -495,6 +515,7 @@ const rootRouteChildren: RootRouteChildren = {
   LecturerOnlineClassesRoute: LecturerOnlineClassesRoute,
   LecturerStudyMaterialsRoute: LecturerStudyMaterialsRoute,
   LecturerTimetableRoute: LecturerTimetableRoute,
+  LecturerUniversityFormsRoute: LecturerUniversityFormsRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
   StudentDashboardRoute: StudentDashboardRoute,
