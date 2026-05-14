@@ -25,6 +25,7 @@ import { Route as StudentDashboardRouteImport } from './routes/student.dashboard
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
 import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
+import { Route as LecturerStudyMaterialsRouteImport } from './routes/lecturer.study-materials'
 import { Route as LecturerExamScheduleRouteImport } from './routes/lecturer.exam-schedule'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
 import { Route as LecturerAssignmentsRouteImport } from './routes/lecturer.assignments'
@@ -109,6 +110,11 @@ const LecturerTimetableRoute = LecturerTimetableRouteImport.update({
   path: '/lecturer/timetable',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerStudyMaterialsRoute = LecturerStudyMaterialsRouteImport.update({
+  id: '/lecturer/study-materials',
+  path: '/lecturer/study-materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerExamScheduleRoute = LecturerExamScheduleRouteImport.update({
   id: '/lecturer/exam-schedule',
   path: '/lecturer/exam-schedule',
@@ -140,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/lecturer/assignments': typeof LecturerAssignmentsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exam-schedule': typeof LecturerExamScheduleRoute
+  '/lecturer/study-materials': typeof LecturerStudyMaterialsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/lecturer/assignments': typeof LecturerAssignmentsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exam-schedule': typeof LecturerExamScheduleRoute
+  '/lecturer/study-materials': typeof LecturerStudyMaterialsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/lecturer/assignments': typeof LecturerAssignmentsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exam-schedule': typeof LecturerExamScheduleRoute
+  '/lecturer/study-materials': typeof LecturerStudyMaterialsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -206,6 +215,7 @@ export interface FileRouteTypes {
     | '/lecturer/assignments'
     | '/lecturer/dashboard'
     | '/lecturer/exam-schedule'
+    | '/lecturer/study-materials'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -227,6 +237,7 @@ export interface FileRouteTypes {
     | '/lecturer/assignments'
     | '/lecturer/dashboard'
     | '/lecturer/exam-schedule'
+    | '/lecturer/study-materials'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -248,6 +259,7 @@ export interface FileRouteTypes {
     | '/lecturer/assignments'
     | '/lecturer/dashboard'
     | '/lecturer/exam-schedule'
+    | '/lecturer/study-materials'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -270,6 +282,7 @@ export interface RootRouteChildren {
   LecturerAssignmentsRoute: typeof LecturerAssignmentsRoute
   LecturerDashboardRoute: typeof LecturerDashboardRoute
   LecturerExamScheduleRoute: typeof LecturerExamScheduleRoute
+  LecturerStudyMaterialsRoute: typeof LecturerStudyMaterialsRoute
   LecturerTimetableRoute: typeof LecturerTimetableRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
@@ -391,6 +404,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LecturerTimetableRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/study-materials': {
+      id: '/lecturer/study-materials'
+      path: '/lecturer/study-materials'
+      fullPath: '/lecturer/study-materials'
+      preLoaderRoute: typeof LecturerStudyMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/exam-schedule': {
       id: '/lecturer/exam-schedule'
       path: '/lecturer/exam-schedule'
@@ -430,6 +450,7 @@ const rootRouteChildren: RootRouteChildren = {
   LecturerAssignmentsRoute: LecturerAssignmentsRoute,
   LecturerDashboardRoute: LecturerDashboardRoute,
   LecturerExamScheduleRoute: LecturerExamScheduleRoute,
+  LecturerStudyMaterialsRoute: LecturerStudyMaterialsRoute,
   LecturerTimetableRoute: LecturerTimetableRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
