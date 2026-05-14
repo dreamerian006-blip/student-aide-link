@@ -26,7 +26,7 @@ function AuthPage() {
 
   const isLecturer = role === "lecturer";
   const Icon = isLecturer ? Users : GraduationCap;
-  const destination = isLecturer ? "/lecturer/upload" : "/student/ai-connect";
+  const destination = isLecturer ? "/lecturer/dashboard" : "/student/ai-connect";
 
   useEffect(() => {
     let active = true;
@@ -62,7 +62,7 @@ function AuthPage() {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
-      navigate({ to: isLecturer ? "/lecturer/upload" : "/student/ai-connect" });
+      navigate({ to: isLecturer ? "/lecturer/dashboard" : "/student/ai-connect" });
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Authentication failed";
       toast.error(msg);

@@ -2,30 +2,24 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/use-auth";
 import {
-  Calendar, BookOpen, FileText, Users, Video, ClipboardList, Bell, FileSignature,
-  LogOut, MessageCircle, Upload, GraduationCap,
+  Calendar, BookOpen, FileText, Users, Video, ClipboardList, FileSignature,
+  LogOut, Upload, GraduationCap,
 } from "lucide-react";
 
-export const Route = createFileRoute("/dashboard")({
-  component: Dashboard,
+export const Route = createFileRoute("/lecturer/dashboard")({
+  component: LecturerDashboard,
 });
 
 type Tile = { icon: any; title: string; desc: string; tone: number; to?: string };
 
-const STUDENT_TILES: Tile[] = [
+const TILES: Tile[] = [
   { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
   { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
   { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
   { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/study-materials-submit" },
   { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer-contacts-submit" },
   { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
-];
-
-const LECTURER_TILES: Tile[] = [
-  { icon: BookOpen, title: "Study Materials", desc: "Upload notes, slides, past papers", tone: 1, to: "/study-materials-submit" },
-  { icon: Users, title: "Lecturer Contacts", desc: "Manage lecturer details", tone: 2, to: "/lecturer-contacts-submit" },
-  { icon: FileSignature, title: "University Forms", desc: "Upload forms, notices, circulars", tone: 1, to: "/university-forms-submit" },
-  { icon: Bell, title: "Events & Notes", desc: "Post events, deadlines, notices", tone: 2, to: "/events-notes-submit" },
+  { icon: FileSignature, title: "University Forms", desc: "Access and submit university documents", tone: 1, to: "/university-forms-submit" },
 ];
 
 const TONE_BG: Record<number, string> = {
@@ -34,16 +28,14 @@ const TONE_BG: Record<number, string> = {
   3: "linear-gradient(135deg, oklch(0.55 0.22 280), oklch(0.6 0.22 250))",
 };
 
-function Dashboard() {
-  const { user, role, loading, signOut } = useAuth();
+function LecturerDashboard() {
+  const { user, loading, signOut } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/" });
   }, [loading, user, navigate]);
 
-  const isLecturer = role === "lecturer";
-  const tiles = isLecturer ? LECTURER_TILES : STUDENT_TILES;
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || (user?.email ? user.email.split("@")[0] : null);
 
   return (
@@ -59,15 +51,6 @@ function Dashboard() {
         </Link>
         <div className="flex items-center gap-2">
           {displayName && <span className="hidden sm:inline text-sm font-medium text-foreground/80">{displayName}</span>}
-          {isLecturer ? (
-            <Link to="/lecturer/dashboard" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
-              <Upload className="h-4 w-4" /> Upload
-            </Link>
-          ) : (
-            <Link to="/student/connect" className="glass inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/80">
-              <MessageCircle className="h-4 w-4" /> AI Connect
-            </Link>
-          )}
           <button onClick={() => signOut().then(() => navigate({ to: "/" }))} className="glass inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-white/80">
             <LogOut className="h-4 w-4" />
           </button>
@@ -76,20 +59,17 @@ function Dashboard() {
 
       <main className="relative z-10 mx-auto max-w-6xl px-6 pb-20">
         <div className="mb-8">
-          <p className="text-sm text-muted-foreground">{isLecturer ? "Lecturer" : "Student"} Dashboard</p>
+          <p className="text-sm text-muted-foreground">Lecturer Dashboard</p>
           <h1 style={{ fontSize: "28px", fontWeight: 600, color: "#1a1a1a" }}>
             {displayName ? `Welcome, ${displayName}` : "Welcome to CampusEase"}
           </h1>
           <p style={{ fontSize: "14px", color: "#666", marginTop: "4px" }}>
-            {isLecturer ? "Manage and upload academic resources for your students" : "Access your academic resources below"}
+            Access your academic resources below
           </p>
         </div>
 
-        <div className={isLecturer
-          ? "grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[1200px] mx-auto"
-          : "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
-        }>
-          {tiles.map((t) => (
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {TILES.map((t) => (
             <button
               key={t.title}
               onClick={() => t.to && navigate({ to: t.to })}
