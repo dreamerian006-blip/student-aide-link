@@ -21,6 +21,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssignmentSubmitRouteImport } from './routes/assignment-submit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentLoginRouteImport } from './routes/student.login'
+import { Route as StudentDashboardRouteImport } from './routes/student.dashboard'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
@@ -85,6 +86,11 @@ const StudentLoginRoute = StudentLoginRouteImport.update({
   path: '/student/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentDashboardRoute = StudentDashboardRouteImport.update({
+  id: '/student/dashboard',
+  path: '/student/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudentConnectRoute = StudentConnectRouteImport.update({
   id: '/student/connect',
   path: '/student/connect',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
+  '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
+  '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
+  '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/lecturer/dashboard'
     | '/student/ai-connect'
     | '/student/connect'
+    | '/student/dashboard'
     | '/student/login'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/lecturer/dashboard'
     | '/student/ai-connect'
     | '/student/connect'
+    | '/student/dashboard'
     | '/student/login'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/lecturer/dashboard'
     | '/student/ai-connect'
     | '/student/connect'
+    | '/student/dashboard'
     | '/student/login'
   fileRoutesById: FileRoutesById
 }
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   LecturerDashboardRoute: typeof LecturerDashboardRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
+  StudentDashboardRoute: typeof StudentDashboardRoute
   StudentLoginRoute: typeof StudentLoginRoute
 }
 
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/dashboard': {
+      id: '/student/dashboard'
+      path: '/student/dashboard'
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof StudentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/student/connect': {
       id: '/student/connect'
       path: '/student/connect'
@@ -350,8 +370,19 @@ const rootRouteChildren: RootRouteChildren = {
   LecturerDashboardRoute: LecturerDashboardRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
+  StudentDashboardRoute: StudentDashboardRoute,
   StudentLoginRoute: StudentLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
