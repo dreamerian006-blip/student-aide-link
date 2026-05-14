@@ -25,6 +25,7 @@ import { Route as StudentDashboardRouteImport } from './routes/student.dashboard
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
 import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
+import { Route as LecturerExamScheduleRouteImport } from './routes/lecturer.exam-schedule'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
 
 const UniversityFormsSubmitRoute = UniversityFormsSubmitRouteImport.update({
@@ -107,6 +108,11 @@ const LecturerTimetableRoute = LecturerTimetableRouteImport.update({
   path: '/lecturer/timetable',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerExamScheduleRoute = LecturerExamScheduleRouteImport.update({
+  id: '/lecturer/exam-schedule',
+  path: '/lecturer/exam-schedule',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerDashboardRoute = LecturerDashboardRouteImport.update({
   id: '/lecturer/dashboard',
   path: '/lecturer/dashboard',
@@ -126,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/exam-schedule': typeof LecturerExamScheduleRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/exam-schedule': typeof LecturerExamScheduleRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/exam-schedule': typeof LecturerExamScheduleRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/timetable-submit'
     | '/university-forms-submit'
     | '/lecturer/dashboard'
+    | '/lecturer/exam-schedule'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/timetable-submit'
     | '/university-forms-submit'
     | '/lecturer/dashboard'
+    | '/lecturer/exam-schedule'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -224,6 +235,7 @@ export interface FileRouteTypes {
     | '/timetable-submit'
     | '/university-forms-submit'
     | '/lecturer/dashboard'
+    | '/lecturer/exam-schedule'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -244,6 +256,7 @@ export interface RootRouteChildren {
   TimetableSubmitRoute: typeof TimetableSubmitRoute
   UniversityFormsSubmitRoute: typeof UniversityFormsSubmitRoute
   LecturerDashboardRoute: typeof LecturerDashboardRoute
+  LecturerExamScheduleRoute: typeof LecturerExamScheduleRoute
   LecturerTimetableRoute: typeof LecturerTimetableRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LecturerTimetableRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/exam-schedule': {
+      id: '/lecturer/exam-schedule'
+      path: '/lecturer/exam-schedule'
+      fullPath: '/lecturer/exam-schedule'
+      preLoaderRoute: typeof LecturerExamScheduleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/dashboard': {
       id: '/lecturer/dashboard'
       path: '/lecturer/dashboard'
@@ -388,6 +408,7 @@ const rootRouteChildren: RootRouteChildren = {
   TimetableSubmitRoute: TimetableSubmitRoute,
   UniversityFormsSubmitRoute: UniversityFormsSubmitRoute,
   LecturerDashboardRoute: LecturerDashboardRoute,
+  LecturerExamScheduleRoute: LecturerExamScheduleRoute,
   LecturerTimetableRoute: LecturerTimetableRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
