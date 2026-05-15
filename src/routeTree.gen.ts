@@ -23,6 +23,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentLoginRouteImport } from './routes/student.login'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
+import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
 
 const UniversityFormsSubmitRoute = UniversityFormsSubmitRouteImport.update({
@@ -95,6 +96,11 @@ const StudentAiConnectRoute = StudentAiConnectRouteImport.update({
   path: '/student/ai-connect',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerTimetableRoute = LecturerTimetableRouteImport.update({
+  id: '/lecturer/timetable',
+  path: '/lecturer/timetable',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerDashboardRoute = LecturerDashboardRouteImport.update({
   id: '/lecturer/dashboard',
   path: '/lecturer/dashboard',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/login': typeof StudentLoginRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/login': typeof StudentLoginRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
   '/student/login': typeof StudentLoginRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/timetable-submit'
     | '/university-forms-submit'
     | '/lecturer/dashboard'
+    | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
     | '/student/login'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/timetable-submit'
     | '/university-forms-submit'
     | '/lecturer/dashboard'
+    | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
     | '/student/login'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/timetable-submit'
     | '/university-forms-submit'
     | '/lecturer/dashboard'
+    | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
     | '/student/login'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   TimetableSubmitRoute: typeof TimetableSubmitRoute
   UniversityFormsSubmitRoute: typeof UniversityFormsSubmitRoute
   LecturerDashboardRoute: typeof LecturerDashboardRoute
+  LecturerTimetableRoute: typeof LecturerTimetableRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
   StudentLoginRoute: typeof StudentLoginRoute
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentAiConnectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/timetable': {
+      id: '/lecturer/timetable'
+      path: '/lecturer/timetable'
+      fullPath: '/lecturer/timetable'
+      preLoaderRoute: typeof LecturerTimetableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/dashboard': {
       id: '/lecturer/dashboard'
       path: '/lecturer/dashboard'
@@ -348,6 +368,7 @@ const rootRouteChildren: RootRouteChildren = {
   TimetableSubmitRoute: TimetableSubmitRoute,
   UniversityFormsSubmitRoute: UniversityFormsSubmitRoute,
   LecturerDashboardRoute: LecturerDashboardRoute,
+  LecturerTimetableRoute: LecturerTimetableRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
   StudentLoginRoute: StudentLoginRoute,
@@ -355,3 +376,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
