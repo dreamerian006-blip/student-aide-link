@@ -1,25 +1,25 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
 import { useAuth } from "@/lib/use-auth";
+import { useRoleGuard } from "@/lib/role-guard";
 import {
   Calendar, BookOpen, FileText, Users, Video, ClipboardList, FileSignature,
-  LogOut, Upload, GraduationCap,
+  LogOut, GraduationCap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/lecturer/dashboard")({
   component: LecturerDashboard,
 });
 
-type Tile = { icon: any; title: string; desc: string; tone: number; to?: string };
+type Tile = { icon: any; title: string; desc: string; tone: number; to: string };
 
 const TILES: Tile[] = [
-  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/timetable-submit" },
-  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/exam-submit" },
-  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/assignment-submit" },
-  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/study-materials-submit" },
-  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer-contacts-submit" },
-  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/online-class-submit" },
-  { icon: FileSignature, title: "University Forms", desc: "Access and submit university documents", tone: 1, to: "/university-forms-submit" },
+  { icon: Calendar, title: "Semester Timetable", desc: "Weekly classes & rooms", tone: 1, to: "/lecturer/timetable" },
+  { icon: ClipboardList, title: "Exam Schedule", desc: "Upcoming exams & venues", tone: 2, to: "/lecturer/exams" },
+  { icon: FileText, title: "Assignments", desc: "Tasks & due dates", tone: 3, to: "/lecturer/assignments" },
+  { icon: BookOpen, title: "Study Materials", desc: "Slides, notes & PDFs", tone: 1, to: "/lecturer/materials" },
+  { icon: Users, title: "Lecturer Contacts", desc: "Reach out to your faculty", tone: 2, to: "/lecturer/contacts" },
+  { icon: Video, title: "Online Classes", desc: "Zoom & Teams links", tone: 3, to: "/lecturer/online-classes" },
+  { icon: FileSignature, title: "University Forms", desc: "Access and submit university documents", tone: 1, to: "/lecturer/university-forms" },
 ];
 
 const TONE_BG: Record<number, string> = {
