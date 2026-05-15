@@ -29,12 +29,10 @@ const TONE_BG: Record<number, string> = {
 };
 
 function LecturerDashboard() {
-  const { user, loading, signOut } = useAuth();
+  useRoleGuard("lecturer");
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!loading && !user) navigate({ to: "/" });
-  }, [loading, user, navigate]);
 
   const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || (user?.email ? user.email.split("@")[0] : null);
 
