@@ -26,6 +26,7 @@ import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connec
 import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
 import { Route as LecturerExamsRouteImport } from './routes/lecturer.exams'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
+import { Route as LecturerAssignmentsRouteImport } from './routes/lecturer.assignments'
 
 const UniversityFormsSubmitRoute = UniversityFormsSubmitRouteImport.update({
   id: '/university-forms-submit',
@@ -112,6 +113,11 @@ const LecturerDashboardRoute = LecturerDashboardRouteImport.update({
   path: '/lecturer/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerAssignmentsRoute = LecturerAssignmentsRouteImport.update({
+  id: '/lecturer/assignments',
+  path: '/lecturer/assignments',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
+  '/lecturer/assignments': typeof LecturerAssignmentsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exams': typeof LecturerExamsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
+  '/lecturer/assignments': typeof LecturerAssignmentsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exams': typeof LecturerExamsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
@@ -164,6 +172,7 @@ export interface FileRoutesById {
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
+  '/lecturer/assignments': typeof LecturerAssignmentsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exams': typeof LecturerExamsRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/study-materials-submit'
     | '/timetable-submit'
     | '/university-forms-submit'
+    | '/lecturer/assignments'
     | '/lecturer/dashboard'
     | '/lecturer/exams'
     | '/lecturer/timetable'
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
     | '/study-materials-submit'
     | '/timetable-submit'
     | '/university-forms-submit'
+    | '/lecturer/assignments'
     | '/lecturer/dashboard'
     | '/lecturer/exams'
     | '/lecturer/timetable'
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | '/study-materials-submit'
     | '/timetable-submit'
     | '/university-forms-submit'
+    | '/lecturer/assignments'
     | '/lecturer/dashboard'
     | '/lecturer/exams'
     | '/lecturer/timetable'
@@ -243,6 +255,7 @@ export interface RootRouteChildren {
   StudyMaterialsSubmitRoute: typeof StudyMaterialsSubmitRoute
   TimetableSubmitRoute: typeof TimetableSubmitRoute
   UniversityFormsSubmitRoute: typeof UniversityFormsSubmitRoute
+  LecturerAssignmentsRoute: typeof LecturerAssignmentsRoute
   LecturerDashboardRoute: typeof LecturerDashboardRoute
   LecturerExamsRoute: typeof LecturerExamsRoute
   LecturerTimetableRoute: typeof LecturerTimetableRoute
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LecturerDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/assignments': {
+      id: '/lecturer/assignments'
+      path: '/lecturer/assignments'
+      fullPath: '/lecturer/assignments'
+      preLoaderRoute: typeof LecturerAssignmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -387,6 +407,7 @@ const rootRouteChildren: RootRouteChildren = {
   StudyMaterialsSubmitRoute: StudyMaterialsSubmitRoute,
   TimetableSubmitRoute: TimetableSubmitRoute,
   UniversityFormsSubmitRoute: UniversityFormsSubmitRoute,
+  LecturerAssignmentsRoute: LecturerAssignmentsRoute,
   LecturerDashboardRoute: LecturerDashboardRoute,
   LecturerExamsRoute: LecturerExamsRoute,
   LecturerTimetableRoute: LecturerTimetableRoute,
