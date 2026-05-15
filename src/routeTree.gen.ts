@@ -24,6 +24,7 @@ import { Route as StudentLoginRouteImport } from './routes/student.login'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
 import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
+import { Route as LecturerOnlineClassesRouteImport } from './routes/lecturer.online-classes'
 import { Route as LecturerMaterialsRouteImport } from './routes/lecturer.materials'
 import { Route as LecturerExamsRouteImport } from './routes/lecturer.exams'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
@@ -105,6 +106,11 @@ const LecturerTimetableRoute = LecturerTimetableRouteImport.update({
   path: '/lecturer/timetable',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerOnlineClassesRoute = LecturerOnlineClassesRouteImport.update({
+  id: '/lecturer/online-classes',
+  path: '/lecturer/online-classes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerMaterialsRoute = LecturerMaterialsRouteImport.update({
   id: '/lecturer/materials',
   path: '/lecturer/materials',
@@ -148,6 +154,7 @@ export interface FileRoutesByFullPath {
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exams': typeof LecturerExamsRoute
   '/lecturer/materials': typeof LecturerMaterialsRoute
+  '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -170,6 +177,7 @@ export interface FileRoutesByTo {
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exams': typeof LecturerExamsRoute
   '/lecturer/materials': typeof LecturerMaterialsRoute
+  '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/lecturer/dashboard': typeof LecturerDashboardRoute
   '/lecturer/exams': typeof LecturerExamsRoute
   '/lecturer/materials': typeof LecturerMaterialsRoute
+  '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
   '/lecturer/timetable': typeof LecturerTimetableRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
@@ -217,6 +226,7 @@ export interface FileRouteTypes {
     | '/lecturer/dashboard'
     | '/lecturer/exams'
     | '/lecturer/materials'
+    | '/lecturer/online-classes'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -239,6 +249,7 @@ export interface FileRouteTypes {
     | '/lecturer/dashboard'
     | '/lecturer/exams'
     | '/lecturer/materials'
+    | '/lecturer/online-classes'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -261,6 +272,7 @@ export interface FileRouteTypes {
     | '/lecturer/dashboard'
     | '/lecturer/exams'
     | '/lecturer/materials'
+    | '/lecturer/online-classes'
     | '/lecturer/timetable'
     | '/student/ai-connect'
     | '/student/connect'
@@ -284,6 +296,7 @@ export interface RootRouteChildren {
   LecturerDashboardRoute: typeof LecturerDashboardRoute
   LecturerExamsRoute: typeof LecturerExamsRoute
   LecturerMaterialsRoute: typeof LecturerMaterialsRoute
+  LecturerOnlineClassesRoute: typeof LecturerOnlineClassesRoute
   LecturerTimetableRoute: typeof LecturerTimetableRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LecturerTimetableRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/online-classes': {
+      id: '/lecturer/online-classes'
+      path: '/lecturer/online-classes'
+      fullPath: '/lecturer/online-classes'
+      preLoaderRoute: typeof LecturerOnlineClassesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/materials': {
       id: '/lecturer/materials'
       path: '/lecturer/materials'
@@ -452,6 +472,7 @@ const rootRouteChildren: RootRouteChildren = {
   LecturerDashboardRoute: LecturerDashboardRoute,
   LecturerExamsRoute: LecturerExamsRoute,
   LecturerMaterialsRoute: LecturerMaterialsRoute,
+  LecturerOnlineClassesRoute: LecturerOnlineClassesRoute,
   LecturerTimetableRoute: LecturerTimetableRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
