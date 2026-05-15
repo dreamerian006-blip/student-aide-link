@@ -21,9 +21,17 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AssignmentSubmitRouteImport } from './routes/assignment-submit'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StudentLoginRouteImport } from './routes/student.login'
+import { Route as StudentDashboardRouteImport } from './routes/student.dashboard'
 import { Route as StudentConnectRouteImport } from './routes/student.connect'
 import { Route as StudentAiConnectRouteImport } from './routes/student.ai-connect'
+import { Route as LecturerUniversityFormsRouteImport } from './routes/lecturer.university-forms'
+import { Route as LecturerTimetableRouteImport } from './routes/lecturer.timetable'
+import { Route as LecturerOnlineClassesRouteImport } from './routes/lecturer.online-classes'
+import { Route as LecturerMaterialsRouteImport } from './routes/lecturer.materials'
+import { Route as LecturerExamsRouteImport } from './routes/lecturer.exams'
 import { Route as LecturerDashboardRouteImport } from './routes/lecturer.dashboard'
+import { Route as LecturerContactsRouteImport } from './routes/lecturer.contacts'
+import { Route as LecturerAssignmentsRouteImport } from './routes/lecturer.assignments'
 
 const UniversityFormsSubmitRoute = UniversityFormsSubmitRouteImport.update({
   id: '/university-forms-submit',
@@ -85,6 +93,11 @@ const StudentLoginRoute = StudentLoginRouteImport.update({
   path: '/student/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudentDashboardRoute = StudentDashboardRouteImport.update({
+  id: '/student/dashboard',
+  path: '/student/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StudentConnectRoute = StudentConnectRouteImport.update({
   id: '/student/connect',
   path: '/student/connect',
@@ -95,9 +108,44 @@ const StudentAiConnectRoute = StudentAiConnectRouteImport.update({
   path: '/student/ai-connect',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LecturerUniversityFormsRoute = LecturerUniversityFormsRouteImport.update({
+  id: '/lecturer/university-forms',
+  path: '/lecturer/university-forms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerTimetableRoute = LecturerTimetableRouteImport.update({
+  id: '/lecturer/timetable',
+  path: '/lecturer/timetable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerOnlineClassesRoute = LecturerOnlineClassesRouteImport.update({
+  id: '/lecturer/online-classes',
+  path: '/lecturer/online-classes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerMaterialsRoute = LecturerMaterialsRouteImport.update({
+  id: '/lecturer/materials',
+  path: '/lecturer/materials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerExamsRoute = LecturerExamsRouteImport.update({
+  id: '/lecturer/exams',
+  path: '/lecturer/exams',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LecturerDashboardRoute = LecturerDashboardRouteImport.update({
   id: '/lecturer/dashboard',
   path: '/lecturer/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerContactsRoute = LecturerContactsRouteImport.update({
+  id: '/lecturer/contacts',
+  path: '/lecturer/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturerAssignmentsRoute = LecturerAssignmentsRouteImport.update({
+  id: '/lecturer/assignments',
+  path: '/lecturer/assignments',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -113,9 +161,17 @@ export interface FileRoutesByFullPath {
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
+  '/lecturer/assignments': typeof LecturerAssignmentsRoute
+  '/lecturer/contacts': typeof LecturerContactsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/exams': typeof LecturerExamsRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
+  '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
+  '/lecturer/timetable': typeof LecturerTimetableRoute
+  '/lecturer/university-forms': typeof LecturerUniversityFormsRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
+  '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
 }
 export interface FileRoutesByTo {
@@ -130,9 +186,17 @@ export interface FileRoutesByTo {
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
+  '/lecturer/assignments': typeof LecturerAssignmentsRoute
+  '/lecturer/contacts': typeof LecturerContactsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/exams': typeof LecturerExamsRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
+  '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
+  '/lecturer/timetable': typeof LecturerTimetableRoute
+  '/lecturer/university-forms': typeof LecturerUniversityFormsRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
+  '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
 }
 export interface FileRoutesById {
@@ -148,9 +212,17 @@ export interface FileRoutesById {
   '/study-materials-submit': typeof StudyMaterialsSubmitRoute
   '/timetable-submit': typeof TimetableSubmitRoute
   '/university-forms-submit': typeof UniversityFormsSubmitRoute
+  '/lecturer/assignments': typeof LecturerAssignmentsRoute
+  '/lecturer/contacts': typeof LecturerContactsRoute
   '/lecturer/dashboard': typeof LecturerDashboardRoute
+  '/lecturer/exams': typeof LecturerExamsRoute
+  '/lecturer/materials': typeof LecturerMaterialsRoute
+  '/lecturer/online-classes': typeof LecturerOnlineClassesRoute
+  '/lecturer/timetable': typeof LecturerTimetableRoute
+  '/lecturer/university-forms': typeof LecturerUniversityFormsRoute
   '/student/ai-connect': typeof StudentAiConnectRoute
   '/student/connect': typeof StudentConnectRoute
+  '/student/dashboard': typeof StudentDashboardRoute
   '/student/login': typeof StudentLoginRoute
 }
 export interface FileRouteTypes {
@@ -167,9 +239,17 @@ export interface FileRouteTypes {
     | '/study-materials-submit'
     | '/timetable-submit'
     | '/university-forms-submit'
+    | '/lecturer/assignments'
+    | '/lecturer/contacts'
     | '/lecturer/dashboard'
+    | '/lecturer/exams'
+    | '/lecturer/materials'
+    | '/lecturer/online-classes'
+    | '/lecturer/timetable'
+    | '/lecturer/university-forms'
     | '/student/ai-connect'
     | '/student/connect'
+    | '/student/dashboard'
     | '/student/login'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -184,9 +264,17 @@ export interface FileRouteTypes {
     | '/study-materials-submit'
     | '/timetable-submit'
     | '/university-forms-submit'
+    | '/lecturer/assignments'
+    | '/lecturer/contacts'
     | '/lecturer/dashboard'
+    | '/lecturer/exams'
+    | '/lecturer/materials'
+    | '/lecturer/online-classes'
+    | '/lecturer/timetable'
+    | '/lecturer/university-forms'
     | '/student/ai-connect'
     | '/student/connect'
+    | '/student/dashboard'
     | '/student/login'
   id:
     | '__root__'
@@ -201,9 +289,17 @@ export interface FileRouteTypes {
     | '/study-materials-submit'
     | '/timetable-submit'
     | '/university-forms-submit'
+    | '/lecturer/assignments'
+    | '/lecturer/contacts'
     | '/lecturer/dashboard'
+    | '/lecturer/exams'
+    | '/lecturer/materials'
+    | '/lecturer/online-classes'
+    | '/lecturer/timetable'
+    | '/lecturer/university-forms'
     | '/student/ai-connect'
     | '/student/connect'
+    | '/student/dashboard'
     | '/student/login'
   fileRoutesById: FileRoutesById
 }
@@ -219,9 +315,17 @@ export interface RootRouteChildren {
   StudyMaterialsSubmitRoute: typeof StudyMaterialsSubmitRoute
   TimetableSubmitRoute: typeof TimetableSubmitRoute
   UniversityFormsSubmitRoute: typeof UniversityFormsSubmitRoute
+  LecturerAssignmentsRoute: typeof LecturerAssignmentsRoute
+  LecturerContactsRoute: typeof LecturerContactsRoute
   LecturerDashboardRoute: typeof LecturerDashboardRoute
+  LecturerExamsRoute: typeof LecturerExamsRoute
+  LecturerMaterialsRoute: typeof LecturerMaterialsRoute
+  LecturerOnlineClassesRoute: typeof LecturerOnlineClassesRoute
+  LecturerTimetableRoute: typeof LecturerTimetableRoute
+  LecturerUniversityFormsRoute: typeof LecturerUniversityFormsRoute
   StudentAiConnectRoute: typeof StudentAiConnectRoute
   StudentConnectRoute: typeof StudentConnectRoute
+  StudentDashboardRoute: typeof StudentDashboardRoute
   StudentLoginRoute: typeof StudentLoginRoute
 }
 
@@ -311,6 +415,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/dashboard': {
+      id: '/student/dashboard'
+      path: '/student/dashboard'
+      fullPath: '/student/dashboard'
+      preLoaderRoute: typeof StudentDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/student/connect': {
       id: '/student/connect'
       path: '/student/connect'
@@ -325,11 +436,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentAiConnectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lecturer/university-forms': {
+      id: '/lecturer/university-forms'
+      path: '/lecturer/university-forms'
+      fullPath: '/lecturer/university-forms'
+      preLoaderRoute: typeof LecturerUniversityFormsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/timetable': {
+      id: '/lecturer/timetable'
+      path: '/lecturer/timetable'
+      fullPath: '/lecturer/timetable'
+      preLoaderRoute: typeof LecturerTimetableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/online-classes': {
+      id: '/lecturer/online-classes'
+      path: '/lecturer/online-classes'
+      fullPath: '/lecturer/online-classes'
+      preLoaderRoute: typeof LecturerOnlineClassesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/materials': {
+      id: '/lecturer/materials'
+      path: '/lecturer/materials'
+      fullPath: '/lecturer/materials'
+      preLoaderRoute: typeof LecturerMaterialsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/exams': {
+      id: '/lecturer/exams'
+      path: '/lecturer/exams'
+      fullPath: '/lecturer/exams'
+      preLoaderRoute: typeof LecturerExamsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lecturer/dashboard': {
       id: '/lecturer/dashboard'
       path: '/lecturer/dashboard'
       fullPath: '/lecturer/dashboard'
       preLoaderRoute: typeof LecturerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/contacts': {
+      id: '/lecturer/contacts'
+      path: '/lecturer/contacts'
+      fullPath: '/lecturer/contacts'
+      preLoaderRoute: typeof LecturerContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lecturer/assignments': {
+      id: '/lecturer/assignments'
+      path: '/lecturer/assignments'
+      fullPath: '/lecturer/assignments'
+      preLoaderRoute: typeof LecturerAssignmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -347,9 +507,17 @@ const rootRouteChildren: RootRouteChildren = {
   StudyMaterialsSubmitRoute: StudyMaterialsSubmitRoute,
   TimetableSubmitRoute: TimetableSubmitRoute,
   UniversityFormsSubmitRoute: UniversityFormsSubmitRoute,
+  LecturerAssignmentsRoute: LecturerAssignmentsRoute,
+  LecturerContactsRoute: LecturerContactsRoute,
   LecturerDashboardRoute: LecturerDashboardRoute,
+  LecturerExamsRoute: LecturerExamsRoute,
+  LecturerMaterialsRoute: LecturerMaterialsRoute,
+  LecturerOnlineClassesRoute: LecturerOnlineClassesRoute,
+  LecturerTimetableRoute: LecturerTimetableRoute,
+  LecturerUniversityFormsRoute: LecturerUniversityFormsRoute,
   StudentAiConnectRoute: StudentAiConnectRoute,
   StudentConnectRoute: StudentConnectRoute,
+  StudentDashboardRoute: StudentDashboardRoute,
   StudentLoginRoute: StudentLoginRoute,
 }
 export const routeTree = rootRouteImport
